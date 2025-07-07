@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="top-panel">
+        <div class="top-panel-content">
+            <h1 class="main-title">Timber Lintel Search</h1>
+            <div class="top-buttons">
+                <button id="exportButton">Export</button>
+                <button id="printButton">Print</button>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="left-panel">
             <h2>Parameters Input</h2>
@@ -45,35 +54,62 @@
             </form>
         </div>
         <div class="right-panel">
-            <div class="diagram">
-                <h2>Timber Lintel Tool</h2>
-                <p id="diagramText" class="diagram-description">Input the parameters at left side. <br><br> Refer to NZS 3604 or manufacturer specification for the requirements of lintel.</p>
-                <!-- Content will be dynamically inserted here -->
-            </div>
-            <div class="results">
-                <h2>Search Results</h2>
-                <table id="resultsTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Span (m)</th>
-                            <th>Load Dim (m)</th>
-                            <th>Roof Type</th>
-                            <th>Floor Type</th>
-                            <th>Size</th>
-                            <th>Select</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Results will be inserted here dynamically -->
-                    </tbody>
-                </table>
-                <div id="buttonContainer" style="text-align: right;">
-                    <button id="deleteButton" disabled>Delete Selected</button>
-                    <button id="renameButton" disabled>Rename Selected</button>
+            <div class="results-diagram-wrapper">
+                <div class="results" style="height: 50%; overflow-y: auto;">
+                    <h2>Lintel Table</h2>
+                    <table id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th style="display:none;">Lintel Type</th>
+                                <th>Span (m)</th>
+                                <th>Load Dim (m)</th>
+                                <th>Roof Type</th>
+                                <th>Wall Type</th>
+                                <th>Size (mm)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Results will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                    <div id="buttonContainer" style="text-align: right;">
+                        <button id="deleteButton" disabled>Delete Row</button>
+                    </div>
+                </div>
+                <div class="diagram" style="height: 50%; overflow-y: auto;">
+                    <h2>Timber Lintel Tool</h2>
+                    <p id="diagramText" class="diagram-description">Input the parameters at left side then click search to start. <br><br> Refer to NZS 3604 or manufacturer specification for the requirements of lintel.</p>
+                    <!-- Content will be dynamically inserted here -->
                 </div>
             </div>
         </div>
+    </div>
+    <div id="printHeader" class="print-header" style="display:none;">
+        <table class="print-header-table">
+            <tr>
+                <td rowspan="3" class="logo-cell">
+                    <img src="images/logo.png" alt="Logo" class="print-logo"><br>
+                    <span class="logo-text">NZ STRUCTCALC</span>
+                </td>
+                <td class="label-cell"><b>Client:</b></td>
+                <td class="value-cell1" id="phClient"></td>
+                <td class="label-cell"><b>Sheet No.</b></td>
+                <td class="value-cell2" id="phSheetNo"></td>
+            </tr>
+            <tr>
+                <td class="label-cell"><b>Job:</b></td>
+                <td class="value-cell1" id="phJob"></td>
+                <td class="label-cell"><b>Job No.</b></td>
+                <td class="value-cell2" id="phJobNo"></td>
+            </tr>
+            <tr>
+                <td class="label-cell"><b>Calc. by</b></td>
+                <td class="value-cell1" id="phCalcBy"></td>
+                <td class="label-cell"><b>Date:</b></td>
+                <td class="value-cell2" id="phDate"></td>
+            </tr>
+        </table>
     </div>
     <script src="script.js"></script>
 </body>
