@@ -2,6 +2,16 @@
 
 let lintelData = [];
 
+// Global job info object to store and reuse between export/print
+let jobInfo = {
+    client: 'DearClient',
+    job: 'Project XXXX\nNZS3604 Lintel Table',
+    jobNo: 'SS111-22',
+    calcBy: '',
+    date: new Date().toLocaleDateString('en-NZ', { month: 'short', year: '2-digit' }),
+    sheetNo: ''
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('searchForm');
     const diagramDiv = document.querySelector('.diagram');
@@ -305,14 +315,15 @@ document.getElementById('exportButton').addEventListener('click', function() {
         alert('No data to export!');
         return;
     }
-    const address = prompt('Project address/name:', document.getElementById('phJob').textContent || 'Project XXXX') || '';
-    const jobNumber = prompt('Job number:', document.getElementById('phJobNo').textContent || 'SS111-22') || '';
-    const client = prompt('Client:', document.getElementById('phClient').textContent || 'DearClient') || '';
+    // Use jobInfo as default, update after prompt
+    jobInfo.job = prompt('Project address/name:', jobInfo.job) || jobInfo.job;
+    jobInfo.jobNo = prompt('Job number:', jobInfo.jobNo) || jobInfo.jobNo;
+    jobInfo.client = prompt('Client:', jobInfo.client) || jobInfo.client;
 
     let csv = 'LintelDataCSVfile\n';
-    csv += `address,${address}\n`;
-    csv += `job_number,${jobNumber}\n`;
-    csv += `client,${client}\n`;
+    csv += `address,${jobInfo.job}\n`;
+    csv += `job_number,${jobInfo.jobNo}\n`;
+    csv += `client,${jobInfo.client}\n`;
     csv += 'data_start\n';
     rows.forEach(row => {
         const cells = row.querySelectorAll('td');
@@ -322,6 +333,9 @@ document.getElementById('exportButton').addEventListener('click', function() {
         let loadDim = cells[3].textContent.trim();
         let roofType = cells[4].textContent.trim();
         let floorType = cells[5].textContent.trim();
+        // Replace 'N/A' with '' for export
+        if (roofType === 'N/A') roofType = '';
+        if (floorType === 'N/A') floorType = '';
         csv += `${name},${lintelType},${span},${loadDim},${roofType},${floorType},SG8\n`;
     });
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -336,24 +350,26 @@ document.getElementById('exportButton').addEventListener('click', function() {
 });
 
 document.getElementById('printButton').addEventListener('click', function() {
-    const client = prompt('Client name:', 'DearClient') || '';
-    const job = prompt('Project name/address:', 'Project XXXX\nNZS3604 Lintel Table') || '';
-    const jobNo = prompt('Job No.:', 'SS111-22') || '';
-    const calcBy = prompt('Calc. by:', '') || '';
-    const date = prompt('Date:', new Date().toLocaleDateString('en-NZ', { month: 'short', year: '2-digit' })) || '';
-    const sheetNo = prompt('Sheet No.:', '') || '';
+    // Use jobInfo as default, update after prompt
+    jobInfo.client = prompt('Client name:', jobInfo.client) || jobInfo.client;
+    jobInfo.job = prompt('Project name/address:', jobInfo.job) || jobInfo.job;
+    jobInfo.jobNo = prompt('Job No.:', jobInfo.jobNo) || jobInfo.jobNo;
+    jobInfo.calcBy = prompt('Calc. by:', jobInfo.calcBy) || jobInfo.calcBy;
+    jobInfo.date = prompt('Date:', jobInfo.date) || jobInfo.date;
+    jobInfo.sheetNo = prompt('Sheet No.:', jobInfo.sheetNo) || jobInfo.sheetNo;
 
-    document.getElementById('phClient').textContent = client;
-    document.getElementById('phJob').innerHTML = job.replace(/\n/g, '<br>');
-    document.getElementById('phJobNo').textContent = jobNo;
-    document.getElementById('phCalcBy').textContent = calcBy;
-    document.getElementById('phDate').textContent = date;
-    document.getElementById('phSheetNo').textContent = sheetNo;
+    // Save to HTML elements if present
+    if (document.getElementById('phClient')) document.getElementById('phClient').textContent = jobInfo.client;
+    if (document.getElementById('phJob')) document.getElementById('phJob').innerHTML = jobInfo.job.replace(/\n/g, '<br>');
+    if (document.getElementById('phJobNo')) document.getElementById('phJobNo').textContent = jobInfo.jobNo;
+    if (document.getElementById('phCalcBy')) document.getElementById('phCalcBy').textContent = jobInfo.calcBy;
+    if (document.getElementById('phDate')) document.getElementById('phDate').textContent = jobInfo.date;
+    if (document.getElementById('phSheetNo')) document.getElementById('phSheetNo').textContent = jobInfo.sheetNo;
 
     const printHeader = document.getElementById('printHeader');
-    printHeader.style.display = '';
+    if (printHeader) printHeader.style.display = '';
     window.print();
     setTimeout(() => {
-        printHeader.style.display = 'none';
+        if (printHeader) printHeader.style.display = 'none';
     }, 1000);
 });
