@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timber Lintel Search</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Parameters Input</h2>
+            <form id="searchForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name">
+
+                <label for="span">Span (m):</label>
+                <input type="number" id="span" name="span" step="0.1" value="1" min="0">
+
+                <label for="loadDimension">Load Dimension (m):</label>
+                <input type="number" id="loadDimension" name="loadDimension" step="1" value="2" min="1" max="6">
+
+                <label for="lintelType">Lintel Type:</label>
+                <select id="lintelType" name="lintelType">
+                    <option value="A">A: roof only</option>
+                    <option value="B">B: roof and wall</option>
+                    <option value="C">C: roof, wall and floor</option>
+                    <option value="D">D: wall and floor</option>
+                    <option value="E">E: floor only</option>
+                </select>
+
+                <label for="roofType">Roof Type:</label>
+                <select id="roofType" name="roofType">
+                    <option value="1">Light</option>
+                    <option value="2">Heavy</option>
+                </select>
+
+                <label for="wallType">Wall Type:</label>
+                <select id="wallType" name="wallType">
+                    <option value="1">Light</option>
+                    <option value="2">Medium</option>
+                </select>
+
+                <button id="searchButton" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="right-panel">
+            <div class="diagram">
+                <h2>Timber Lintel Tool</h2>
+                <p id="diagramText" class="diagram-description">Input the parameters at left side. <br><br> Refer to NZS 3604 or manufacturer specification for the requirements of lintel.</p>
+                <!-- Content will be dynamically inserted here -->
+            </div>
+            <div class="results">
+                <h2>Search Results</h2>
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Span (m)</th>
+                            <th>Load Dim (m)</th>
+                            <th>Roof Type</th>
+                            <th>Floor Type</th>
+                            <th>Size</th>
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Results will be inserted here dynamically -->
+                    </tbody>
+                </table>
+                <div id="buttonContainer" style="text-align: right;">
+                    <button id="deleteButton" disabled>Delete Selected</button>
+                    <button id="renameButton" disabled>Rename Selected</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
