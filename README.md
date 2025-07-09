@@ -211,6 +211,6 @@ This web app is provided as a design aid for timber lintel design. You are free 
 
 This tool is not a substitute for construction purpose without professional engineering judgment. The user assumes full responsibility for all design work and the accuracy of inputs and results. All designs must be reviewed and approved by an authorized structural engineer or timber supplier prior to construction.
 
-For full licensing details, limitations, and warranty disclaimers, please refer to the [LICENSE](LICENSE) file in this repository.
+For full licensing details, limitations, and warranty disclaimers, please refer to the [LICENSE](/LICENSE.txt) file in this repository.
 
 For any queries regarding usage or distribution, or to report a bug, please contact: structcalcnz@gmail.com
